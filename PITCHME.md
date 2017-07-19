@@ -130,11 +130,14 @@ Create .gitattributes file
 secret.txt filter=git-crypt diff=git-crypt
 ```
 
-Add to git
+
+
+Then add to git
 
 ```bash
-git add .gitattributes
+git add secret.txt
 ```
 
+> *Warning* Setup `.gitattributes` BEFORE stage secretfiles to git.
 
 +++
