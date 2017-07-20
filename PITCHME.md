@@ -33,7 +33,7 @@ gpg --generate-key
 ### List keys in your local keyring
 
 
-```
+```bash
 $ gpg --list-keys y.takahara@gmail.com
 pub   rsa2048 2017-06-22 [SC] [expires: 2019-06-22]
       983608495645E4172F2D60EAE693F4D73438BE8E
@@ -51,7 +51,7 @@ sub   rsa2048 2017-06-22 [E] [expires: 2019-06-22]
 
 #### 1. Taro exports his public key like this:
 
-```
+```bash
 $ gpg --armor --export taro@wakumo.vn
 -----BEGIN PGP PUBLIC KEY BLOCK-----
 
@@ -104,13 +104,13 @@ $ gpg --import taro.pub
 #### 1. Taro send to public keyserver (pgp.mit.edu)
 
 
-```
+```bash
 $ gpg  --send-keys --keyserver pgp.mit.edu {KEY-ID}
 ```
 
 like this:
 
-```
+```bash
 $ gpg  --send-keys --keyserver pgp.mit.edu 983608495645E4172F2D60EAE693F4D73438BE8E
 ```
 
@@ -121,15 +121,18 @@ And notify {KEY-ID} to Jiro.
 #### 2. Jiro imort Taro's key from keyserver
 
 
-```
+```bash
 $ gpg --keyserver pgp.mit.edu --recv-keys {KEY-ID}
 ```
 
 like this:
 
-```
+```bash
 $ gpg --keyserver pgp.mit.edu --recv-keys 983608495645E4172F2D60EAE693F4D73438BE8E
 ```
+
++++
+
 
 > *Warning*
 > Don't trust just only email!
@@ -138,9 +141,15 @@ $ gpg --keyserver pgp.mit.edu --recv-keys 983608495645E4172F2D60EAE693F4D73438BE
 
 ---
 
+### How to hide secret data in github
+
++++
+
 ### Solution - git-crypt
 
 > https://www.agwa.name/projects/git-crypt/
+
++++
 
 ---
 
@@ -148,8 +157,9 @@ $ gpg --keyserver pgp.mit.edu --recv-keys 983608495645E4172F2D60EAE693F4D73438BE
 
 1. clone  (as usual)
 2. unlock <- add
-3. commit (as usual)
-4. push   (as usual)
+3. edit file (as usual)
+4. stage&commit (as usual)
+5. push   (as usual)
 
 +++
 
@@ -163,6 +173,7 @@ Get and Modify
 3. commit (as usual)
 4. push   (as usual)
 
++++
 
 ### Install git-crypt
 
@@ -172,7 +183,7 @@ brew install git-crypt
 
 +++
 
-### Quick start
+### Quick start (Initial setup)
 
 ```bash
 cd {your git repo}
@@ -183,7 +194,7 @@ git-crypt init
 
 ### Add public key
 
-```
+```bash
 git-crypt add-gpg-user {{ KEY ID }}
 ```
 
@@ -199,7 +210,7 @@ git-crypt add-gpg-user ADD4A1C5BB986FA6AAABD2A3742FEB2006B99F25
 
 ```bash
 $ git clone { git url }
-$ git-crypt unlock
+$ git crypt unlock
 ```
 
 +++
@@ -209,16 +220,37 @@ $ git-crypt unlock
 
 Create .gitattributes file
 
-```.gitattributes
+```bash:.gitattributes
 secret.txt filter=git-crypt diff=git-crypt
+```
 
+We can use wild card like this:
 
+```bash:.gitattributes
+secret.txt filter=git-crypt diff=git-crypt
+*.key filter=git-crypt diff=git-crypt
+```
 
-Then add to git
++++
+
+Then stage & commit
 
 ```bash
 git add secret.txt
+git commit
 ```
 
 > *Warning*
 > EDIT `.gitattributes` BEFORE stage (git add) secretfiles to git.
+
++++
+
+```bash
+git push origin master
+```
+
+All Eemote files are encrypted.
+
+---
+
+#### Do you have any questions?
