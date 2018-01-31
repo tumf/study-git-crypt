@@ -206,6 +206,61 @@ git-crypt add-gpg-user ADD4A1C5BB986FA6AAABD2A3742FEB2006B99F25
 
 +++
 
+### git-crypt: GPG error: Failed to encrypt
+
+```bash
+$ git-crypt add-gpg-user D381FF9E23DAC5B974ADFB40EAB10F4444444B14
+gpg: 86ADD9AF9241B449: There is no assurance this key belongs to the named user
+gpg: [stdin]: encryption failed: Unusable public key
+git-crypt: GPG error: Failed to encrypt
+```
+
+
+```
+$ gpg --list-keys D381FF9E23DAC5B974ADFB40EAB10F4444444B14
+pub  rsa2048/EAB10F4444444B14
+     created: 2017-07-21  expires: 2019-07-21  usage: SC
+     trust: unknown       validity: unknown
+sub  rsa2048/86ADD9AF9241B449
+     created: 2017-07-21  expires: 2019-07-21  usage: E
+[ unknown] (1). Vo Dong Nhut <nhutvd@wakumo.vn>
+```
+
+### How to trust
+
+```bash
+$ gpg --edit-key <KEY_ID>
+```
+
+then:
+
+
+```
+gpg> trust
+  1 = I don't know or won't say
+  2 = I do NOT trust
+  3 = I trust marginally
+  4 = I trust fully
+  5 = I trust ultimately
+  m = back to the main menu
+
+Your decision? 4
+Do you really want to set this key to ultimate trust? (y/N) y
+```
+
+```
+$ gpg --list-keys D381FF9E23DAC5B974ADFB40EAB10F4444444B14
+pub   rsa2048 2017-07-21 [SC] [expires: 2019-07-21]
+      D381FF9E23DAC5B974ADFB40EAB10F4444444B14
+uid           [ultimate] Vo Dong Nhut <nhutvd@wakumo.vn>
+sub   rsa2048 2017-07-21 [E] [expires: 2019-07-21]
+```
+
+https://stackoverflow.com/questions/33361068/gnupg-there-is-no-assurance-this-key-belongs-to-the-named-user
+
+
++++
+
 ### Clone and Unlock
 
 ```bash
@@ -249,7 +304,7 @@ git commit
 git push origin master
 ```
 
-All Eemote files are encrypted.
+All Remote files are encrypted.
 
 ---
 
