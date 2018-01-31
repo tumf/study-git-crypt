@@ -118,7 +118,7 @@ And notify {KEY-ID} to Jiro.
 
 +++
 
-#### 2. Jiro imort Taro's key from keyserver
+#### 2. Jiro import Taro's key from keyserver
 
 
 ```bash
