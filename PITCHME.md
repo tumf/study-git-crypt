@@ -309,3 +309,10 @@ All Remote files are encrypted.
 ---
 
 #### Do you have any questions?
+
+##### Let's try!
+
+* Install GPG.
+* Create your key.
+* Send your public key to keyserver.
+* Exchange GPG keys with your team mates.
